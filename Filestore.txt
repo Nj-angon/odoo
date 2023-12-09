@@ -1,0 +1,3 @@
+For database backup paste the existing Filestore and set access to the fielstore 
+sudo chown -R odoo:odoo /odoo/.local/share/Odoo/filestore
+sudo service odoo-server restart
