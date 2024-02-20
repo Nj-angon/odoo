@@ -9,6 +9,7 @@ CREATE DATABASE mydatabase;
 locate the filestore
 
 ---- Live Server ------
+
 #sudo -u postgres createdb -O odoo Olila
 #pg_dump -h localhost -U odoo -d Olila_prod -Fc -f /odoo/Olila_prod.sql
 
