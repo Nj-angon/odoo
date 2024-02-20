@@ -8,12 +8,13 @@ CREATE DATABASE mydatabase;
 4. psql -U postgres(owner_name) -d mydatabase -f backup_file_name.sql
 locate the filestore
 
-# sudo -u postgres createdb -O odoo Olila
-# pg_dump -h localhost -U odoo -d Olila_prod -Fc -f /odoo/Olila_prod.sql
+---- Live Server ------
+#sudo -u postgres createdb -O odoo Olila
+#pg_dump -h localhost -U odoo -d Olila_prod -Fc -f /odoo/Olila_prod.sql
 
-# pg_restore -U enterprise -d Olila_prod -Fc -c -v -h localhost -W -p 5432 Olila_prod.sql
+#pg_restore -U enterprise -d Olila_prod -Fc -c -v -h localhost -W -p 5432 Olila_prod.sql
 
-# pg_restore -U odoo -d Olila_prod -h localhost -p 5432 -W -v /opt/Olila_prod.sql
+#pg_restore -U odoo -d Olila_prod -h localhost -p 5432 -W -v /opt/Olila_prod.sql
 
 
 
