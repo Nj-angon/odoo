@@ -11,6 +11,7 @@ locate the filestore
 ---- Live Server ------
 
 #sudo -u postgres createdb -O odoo Olila
+
 #pg_dump -h localhost -U odoo -d Olila_prod -Fc -f /odoo/Olila_prod.sql
 
 #pg_restore -U enterprise -d Olila_prod -Fc -c -v -h localhost -W -p 5432 Olila_prod.sql
