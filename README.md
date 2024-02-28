@@ -18,6 +18,11 @@ locate the filestore
 
 #pg_restore -U odoo -d Olila_prod -h localhost -p 5432 -W -v /opt/Olila_prod.sql
 
+@Set database user password
+
+#sudo -u postgres psql
+
+#ALTER USER your_username WITH PASSWORD 'your_new_password';
 
 
 
