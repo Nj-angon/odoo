@@ -24,5 +24,6 @@ locate the filestore
 
 #ALTER USER your_username WITH PASSWORD 'your_new_password';
 
+#sudo tail -f /var/log/odoo/odoo-server.log
 
 
