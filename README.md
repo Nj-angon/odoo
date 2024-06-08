@@ -5,7 +5,10 @@ psql -U postgres
 CREATE DATABASE mydatabase;
 \q
 3. createdb -U postgres(owner_name) -O owner_name database_name;
-4. psql -U postgres(owner_name) -d mydatabase -f backup_file_name.sql
+or
+  *createdb -U odoosaas -h 203.190.9.116 -p 6080 dicp.df.daffodil.family
+    
+6. psql -U postgres(owner_name) -d mydatabase -f backup_file_name.sql
 locate the filestore
 
 ---- Live Server ------
