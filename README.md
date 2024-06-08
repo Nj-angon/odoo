@@ -17,6 +17,8 @@ locate the filestore
 #pg_restore -U enterprise -d Olila_prod -Fc -c -v -h localhost -W -p 5432 Olila_prod.sql
 
 #pg_restore -U odoo -d Olila_prod -h localhost -p 5432 -W -v /opt/Olila_prod.sql
+or
+* pg_restore -U odoosaas -d dti.df.daffodil.family -h 203.190.9.116 -p 6080 -W -j 4 -v dti.sql
 
 @Set database user password
 
