@@ -14,8 +14,10 @@ locate the filestore
 ---- Live Server ------
 
 #sudo -u postgres createdb -O odoo Olila
+
 fOR BACKUP SQL
 #pg_dump -h localhost -U odoo -d Olila_prod -Fc -f /odoo/Olila_prod.sql
+
 #pg_dump -U odoosaas -h 103.3.62.233 -p 5432 -d diss.df.daffodil.family -F c -b -v -f /odoo/db_backup/diss.sql
 
 RESTORE DATABASE
