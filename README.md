@@ -36,4 +36,6 @@ or
 
 #sudo tail -f /var/log/odoo/odoo-server.log
 
+#Docker instance 
+docker exec -it  -u root dicchr.df.daffodil.family /bin/bash
 
