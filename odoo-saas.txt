@@ -1,0 +1,37 @@
+1. create a folder name Odoo-SAAS-Data inside odoo directory
+
+2. create docker_vhosts, odoo14_template_cont and this three file odoo.conf, odoo-template.conf, odoo-server.conf inside Odoo-SAAS-Data
+
+2. create vhosttemplate.txt file inside docker_vhosts
+
+3. docker setup in the system 
+
+4. copy the Odoo-Saas-Docker-Data directory from old saas server to this new server in the root directory
+
+5. this Odoo-Saas-Docker-Data folder contain Dockerfile, entrypoint.sh, odoo-server.conf, run_odoo.sh
+change the neccessary things for these file. and change the odoo user_id and group_id inside Dockerfile according to this server odoo userid and groupid
+
+6. run this command inside Odoo-Saas-Docker-Data directory
+  docker build -t odoobywebkul:14.0 .
+  successfully build docker 
+  and also this command 
+  docker run -d -p 0.0.0.0:8888:8069 -p 0.0.0.0:8899:8071 --name odoo14_template_cont odoobywebkul:14.0
+  after run this command show this 
+The container name "/odoo14_template_cont" is already in use by container "70f0953dac613a1f3ec27553370c2f1e6e3051ac35723e7cfbab66e901a5a875". You have to remove (or rename) that container to be able to reuse that name.
+
+7. After this when try to create db template from the system 
+
+showing this usererror:
+"Couldn't Create DB. Please ensure that template server is running, you may need to restart it once!!"
+
+8. When I want to start the template by this command 
+docker start odoo14_template_cont
+showing this:
+Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "/entrypoint.sh": permission denied: unknown
+Error: failed to start containers: odoo14_template_cont
+
+df@dfsaas:~$ docker exec -it odoo14_template_cont /bin/bash
+Error response from daemon: container 70f0953dac613a1f3ec27553370c2f1e6e3051ac35723e7cfbab66e901a5a875 is not running
+
+
+
