@@ -39,3 +39,5 @@ or
 #Docker instance 
 docker exec -it  -u root dicchr.df.daffodil.family /bin/bash
 
+#python odoo-bin --config=D:\Odoo\odoo-15.0\odoo.conf --database=odoo14_migrated --update=all --stop-after-init
+
