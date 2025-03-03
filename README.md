@@ -40,4 +40,5 @@ or
 docker exec -it  -u root dicchr.df.daffodil.family /bin/bash
 
 #python odoo-bin --config=D:\Odoo\odoo-15.0\odoo.conf --database=odoo14_migrated --update=all --stop-after-init
-
+#For upgrade enterprise migration
+#sudo -u odoo python3 odoo_upgrade.py test -d Olila_prod -t 17.0 --contract=M21061027296219
