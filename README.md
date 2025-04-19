@@ -46,3 +46,8 @@ docker exec -it  -u root dicchr.df.daffodil.family /bin/bash
 #curl -s https://upgrade.odoo.com/upgrade -o odoo_upgrade.py
 
 #sudo -u odoo python3 odoo_upgrade.py test -d Olila_prod -t 17.0 --contract=M21061027296219
+
+#SELECT id, name, module, path
+FROM ir_asset
+WHERE name ILIKE '%olila%';
+
