@@ -1,0 +1,22 @@
+#Openupgrade Module Migrate
+1. Migrate the custom module for targeted version
+2. first duplicate or backup the source db 
+3. download or clone the openupgrade source code in targeted version like if migrate from odoo14 to odoo15 then openupgrade version 15 need to clone in odoo 15
+4. then copy the openupgrade folder path and paste it to addons_path 
+5. install openupgrade library
+6. restore the db in targeted version or just change the user in targeted version to define source version user
+
+7. run this 
+./odoo-bin -c /etc/odoo15.conf -d disenv --upgrade-path=/opt/odoo-15/OpenUpgrade/openupgrade_scripts/scripts --update all --stop-after-init --load=base,web,openupgrade_framework
+
+8. run this 
+./odoo-bin -c /etc/odoo15.conf -d disenv --update all 
+
+if there is js error and showing white screen delete the assets by this command:
+
+DELETE FROM ir_attachment WHERE url LIKE '/web/content/%';
+DELETE FROM ir_asset;
+DELETE FROM ir_attachment WHERE name LIKE 'web.assets_%';
+
+./odoo-bin -c /etc/odoo15.conf -d <your-db-name> -u web
+
