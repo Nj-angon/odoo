@@ -20,3 +20,6 @@ DELETE FROM ir_attachment WHERE name LIKE 'web.assets_%';
 
 ./odoo-bin -c /etc/odoo15.conf -d <your-db-name> -u web
 
+sudo chmod -R 777 /opt/odoo16/odoo16/filestore/  # Temporary wide access
+sudo setfacl -R -m u:odoo:rwx /opt/odoo16/odoo16/filestore/
+sudo setfacl -R -m d:u:odoo:rwx /opt/odoo16/odoo16/filestore/
