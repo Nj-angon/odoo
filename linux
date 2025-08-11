@@ -1,0 +1,22 @@
+Ubuntu permission
+
+sudo chmod -R 777 /path/to/directory
+
+Here’s what each part means:
+
+    sudo → Run as superuser.
+
+    chmod → Change permissions.
+
+    -R → Apply changes recursively (to all files and subdirectories).
+
+    777 → Full permissions for owner, group, and others (read, write, execute).
+
+sudo chown -R $USER:$USER /path/to/directory
+sudo chmod -R 755 /path/to/directory   # Read & execute for others, full for owner
+sudo chmod -R 775 /path/to/directory   # Full for owner & group, read/execute for others
+
+sudo systemctl restart service_name   # Restart the service
+sudo systemctl enable service_name    # Make it start at boot
+sudo systemctl status service_name    # Check its status
+
