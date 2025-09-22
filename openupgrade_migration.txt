@@ -23,3 +23,7 @@ DELETE FROM ir_attachment WHERE name LIKE 'web.assets_%';
 sudo chmod -R 777 /opt/odoo16/odoo16/filestore/  # Temporary wide access
 sudo setfacl -R -m u:odoo:rwx /opt/odoo16/odoo16/filestore/
 sudo setfacl -R -m d:u:odoo:rwx /opt/odoo16/odoo16/filestore/
+
+
+./odoo-bin   -c /etc/odoo17.conf   -d disco   --upgrade-path=/opt/odoo17/OpenUpgrade/openupgrade_scripts/scripts   -u all   --stop-after-init   --load=base,web,openupgrade_framework   --log-level=debug   --log-handler=:DEBUG   --logfile=/dev/stdout
+
