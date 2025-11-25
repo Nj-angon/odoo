@@ -1,0 +1,24 @@
+./odoo-bin   -c /etc/odoo15.conf   -d dco.daffodil.group   --upgrade-path=/opt/odoo-15/OpenUpgrade/openupgrade_scripts/scripts   -u all   --stop-after-init   --load=base,web,openupgrade_framework   --log-level=debug   --log-handler=:DEBUG   --logfile=/dev/stdout
+
+
+./odoo-bin   -c /etc/odoo16.conf   -d dco.daffodil.group   --upgrade-path=/opt/odoo16/odoo16/OpenUpgrade/openupgrade_scripts/scripts   -u all   --stop-after-init   --load=base,web,openupgrade_framework   --log-level=debug   --log-handler=:DEBUG   --logfile=/dev/stdout
+
+
+./odoo-bin   -c /etc/odoo17.conf   -d dco.df.daffodil.family   --upgrade-path=/opt/odoo17/OpenUpgrade/openupgrade_scripts/scripts   -u all   --stop-after-init   --load=base,web,openupgrade_framework   --log-level=debug   --log-handler=:DEBUG   --logfile=/dev/stdout
+
+
+./odoo-bin   -c /etc/odoo18.conf   -d dco.df.daffodil.family   --upgrade-path=/opt/odoo18/OpenUpgrade/openupgrade_scripts/scripts   -u all   --stop-after-init   --load=base,web,openupgrade_framework   --log-level=debug   --log-handler=:DEBUG   --logfile=/dev/stdout
+
+sudo lsof -i :8030
+
+./odoo-bin   -c /etc/odoo18.conf   -d dco.df.daffodil.family   --update all   --log-level=debug   --log-handler=:DEBUG   --logfile=/dev/stdout
+
+
+sudo chmod -R 777 /opt/odoo18/.local/share/Odoo/filestore/dfoffice.df.daffodil.family/
+
+
+sudo chmod -R 777 /var/lib/odoo/filestore/dfoffice/
+
+pg_restore -U odoo -d dfoffice -h localhost -p 5432 -W -j 4 -v /media/angon/HDD2/saas_14_sql/dfoffice.sql 
+
+createdb -U odoo -h localhost -p 5432 dfoffice
