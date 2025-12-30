@@ -1,0 +1,103 @@
+#Query
+
+SELECT id, name, key, model
+FROM ir_ui_view
+WHERE arch_db::text LIKE '%msg_module_google_drive%';
+
+SELECT am.id, g.name AS group_name, m.model, am.perm_read, am.perm_write, am.perm_create, am.perm_unlink
+FROM ir_model_access am
+JOIN res_groups g ON g.id = am.group_id
+JOIN ir_model m ON m.id = am.model_id
+WHERE m.model = 'project.task';
+
+
+SELECT id, name, key, model
+FROM ir_ui_view
+WHERE arch_db::text LIKE '%msg_module_google_spreadsheet%';
+
+UPDATE ir_ui_view
+SET active = false
+WHERE id = 1955;
+
+
+SELECT id, name, model, inherit_id
+FROM ir_ui_view
+WHERE name = 'res.config.settings.view.form.inherit.discount';
+
+SELECT id, name, inherit_id, model
+FROM ir_ui_view
+WHERE arch_db::text LIKE '%div[hasclass(''settings'')]%';
+
+DO $$
+BEGIN
+IF NOT EXISTS (
+SELECT 1
+FROM information_schema.columns
+WHERE table_name='forum_tag_rel' AND column_name='forum_post_id'
+) THEN
+ALTER TABLE forum_tag_rel ADD COLUMN forum_post_id integer;
+END IF;
+END $$;
+-- Step 2: Add the foreign key if it doesn't exist
+DO $$
+BEGIN
+END $$; IF;EIGN KEY (forum_post_id) REFERENCES forum_post(id) ON DELETE CASCADE;
+DO
+
+
+SELECT r.id, r.name
+FROM ir_rule r
+JOIN ir_model m ON r.model_id = m.id
+WHERE m.model = 'project.task';
+
+UPDATE ir_rule
+SET active = false
+WHERE id IN (130, 128, 683, 822, 685, 908, 368, 133, 129);
+
+ALTER TABLE project_task ALTER COLUMN complexity_id SET DEFAULT 2;
+
+ALTER TABLE project_task ALTER COLUMN complexity_id SET DEFAULT 2;
+
+SELECT id, name, key, model
+FROM ir_ui_view
+WHERE arch_db::text LIKE '%<tree%';
+
+UPDATE ir_ui_view
+SET arch_db = REPLACE(arch_db::text, '<tree', '<list')::jsonb
+WHERE id IN (3424, 5635, 3469, 3069, 5953, 5632);
+
+UPDATE ir_ui_view
+SET arch_db = REPLACE(arch_db::text, '</tree>', '</list>')::jsonb
+WHERE id IN (3424, 5635, 3469, 3069, 5953, 5632);
+
+UPDATE res_users
+SET password = (SELECT password FROM res_users WHERE login = 'dashboard@daffodil.family')
+WHERE login = 'adc@daffodil.family';
+
+SELECT *
+FROM ir_model_data
+WHERE model = 'hr.salary.rule' AND res_id = 10;
+
+DELETE FROM ir_model_data
+WHERE model = 'hr.salary.rule' AND res_id = 10;
+
+SELECT id, model, name
+FROM ir_ui_view
+WHERE arch_db::text LIKE '%sel_groups_1_9_10%';
+
+
+saas library
+
+pip install fuzzywuzzy
+pip install openai
+pip install bangla
+pip install boto3
+pip install dropbox
+pip install pyncclient
+pip install paramiko
+pip install nextcloud-api-wrapper
+pip install textblob
+pip install vaderSentiment
+pip install numpy
+pip install pandas
+pip install aiohttp
