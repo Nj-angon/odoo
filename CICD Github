@@ -1,0 +1,242 @@
+#Production Server Structure (Ubuntu)
+Assume your production server already runs Odoo.
+Example structure:
+/opt/odoo18/
+├── odoo/
+├── custom-addons/
+│   └── sale_custom_discount
+├── odoo.conf
+Example config:
+addons_path = /opt/odoo18/odoo/addons,/opt/odoo18/custom-addons
+Your custom modules must be inside
+/opt/odoo18/custom-addons
+
+#Create GitHub Repository
+Go to GitHub → create repository.
+Example repo name:
+odoo-custom-addons
+clone the repo in my local pc
+Repository structure:
+odoo-custom-addons/
+├── sale_custom_discount/
+│   ├── __manifest__.py
+│   ├── models/
+│   ├── views/
+│   └── security/
+└── requirements.txt
+copy the modules in this cloning repo
+Push Module from Local Machine 
+Add files:
+git add .
+git commit -m "Initial module"
+git push origin main
+Now GitHub contains your module.
+
+#Clone Repository on Production Server
+
+Login to server:
+ssh root@your-server-ip
+Go to addons folder:
+cd /opt/odoo18
+Clone repo:
+git clone https://github.com/username/odoo-custom-addons.git custom-addons
+Now server structure becomes:
+/opt/odoo18/
+├── odoo/
+├── custom-addons/
+│   └── sale_custom_discount
+
+# Create GitHub Actions Workflow
+
+Inside your repo create folder:
+.github/workflows/
+Create file:
+.github/workflows/odoo-deploy.yml
+Example pipeline:
+
+#Use For VPS Server 
+
+name: Odoo CI/CD
+on:
+  push:
+    branches: [ main ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.12
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    - name: Run Module Test
+      run: |
+        echo "Test step placeholder"
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to Production Server
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          cd /opt/odoo18/custom-addons
+          git pull origin main
+          sudo systemctl restart odoo18
+
+# Add Server Secrets in GitHub
+Go to GitHub:
+Repository
+ → Settings
+ → Secrets
+ → Actions
+Add:
+SERVER_IP
+192.168.1.10
+SERVER_USER
+ubuntu
+SERVER_SSH_KEY
+Your private SSH key
+
+# Create SSH Key
+On your local machine:
+ssh-keygen
+You will get:
+~/.ssh/id_rsa
+~/.ssh/id_rsa.pub
+
+Add public key to server:
+ssh-copy-id ubuntu@server-ip
+Test login:
+ssh ubuntu@server-ip
+
+# Add Private Key to GitHub
+
+Open:
+
+~/.ssh/id_rsa
+
+Copy content:
+-----BEGIN OPENSSH PRIVATE KEY-----
+....
+Paste inside GitHub secret:
+
+SERVER_SSH_KEY
+
+1️⃣1️⃣ Real Production Structure
+
+Typical Odoo CI/CD project:
+
+repo/
+├── addons/
+│   ├── sale_custom_discount
+│   ├── hr_extra_fields
+│   └── stock_report
+│
+├── requirements.txt
+│
+└── .github/
+    └── workflows/
+        └── deploy.yml
+
+Server:
+
+/opt/odoo18/
+├── odoo
+├── custom-addons (git repo)
+└── odoo.conf
+
+
+1️⃣3️⃣ Optional (Better Production)
+
+Better approach:
+
+Instead of restart Odoo always:
+
+./odoo-bin -u module_name -d db_name
+
+Example:
+
+./odoo-bin -u sale_custom_discount -d production_db
+
+
+#for local pc
+name: Odoo CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  # ==========================
+  # CI TEST JOB (GitHub Server)
+  # ==========================
+
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.10
+
+      - name: Install Dependencies
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      - name: CI Validation Step
+        run: echo "CI Test Passed"
+
+  # ==========================
+  # DEPLOY JOB (Production PC)
+  # ==========================
+
+  deploy:
+    needs: test
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull Latest Code
+        run: |
+          cd /opt/odoo16/odoo16/odoo-custom-addons
+          git pull origin main
+
+      - name: Restart Odoo Service
+        run: |
+          sudo systemctl restart odoo16
+
+      - name: Deployment Completed
+        run: echo "Deployment Success"
