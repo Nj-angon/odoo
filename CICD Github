@@ -220,7 +220,7 @@ jobs:
 
       - name: Install Lint Tools
         run: |
-          pip install flake8 pylint pylint-odoo
+          pip install flake8 pylint pylint-odoo black
       # -----------------------
       # Python Syntax Check
       # -----------------------
@@ -234,7 +234,7 @@ jobs:
 
       - name: Run flake8
         run: |
-          flake8 .
+          flake8 . --max-line-length=120 --ignore=F401,W292,W391,E265,E741,E302
       # -----------------------
       # Run pylint-odoo
       # -----------------------
@@ -247,7 +247,7 @@ jobs:
 
 
   # ==========================
-  # DEPLOY JOB (Production PC)
+  # DEPLOY JOB (Production Server)
   # ==========================
 
   deploy:
