@@ -1,0 +1,131 @@
+The article describes a two-environment CI/CD pipeline:
+
+Staging environment
+
+Production environment
+
+Branches:
+
+staging
+main
+3️⃣ Correct Flow Explained
+Step 1 — Developer pushes code
+Developer
+   │
+   ▼
+Push → staging branch
+
+Command example:
+
+git push origin staging
+Step 2 — GitHub Actions runs CI
+
+Workflow runs when staging branch updates.
+
+on:
+  push:
+    branches:
+      - staging
+
+GitHub will:
+
+1️⃣ Install dependencies
+2️⃣ Run tests
+3️⃣ Check code quality
+4️⃣ Deploy to staging server
+
+Flow:
+
+Push → staging
+      │
+      ▼
+GitHub Actions
+      │
+      ▼
+CI tests
+      │
+      ▼
+Deploy to staging server
+
+Now the module runs on a staging Odoo server.
+
+4️⃣ Step 3 — Manager Reviews Changes
+
+Manager tests the system on staging.
+
+Example checks:
+
+module installs
+
+UI works
+
+no errors
+
+business logic correct
+
+If everything looks good → they approve.
+
+5️⃣ Step 4 — Pull Request to Production
+
+Now the developer creates a Pull Request:
+
+staging → main
+
+In GitHub:
+
+New Pull Request
+base: main
+compare: staging
+
+Manager reviews the PR and clicks:
+
+Merge Pull Request
+6️⃣ Step 5 — Production Deployment
+
+When code merges into main:
+
+Another GitHub Actions workflow runs.
+
+on:
+  push:
+    branches:
+      - main
+
+Now deployment happens on production server.
+
+Flow:
+
+Merge PR → main
+      │
+      ▼
+GitHub Actions
+      │
+      ▼
+Deploy to Production Odoo Server
+7️⃣ Final Architecture
+
+This is the exact structure described in the article.
+
+Developer
+   │
+   ▼
+Push → staging
+   │
+   ▼
+CI tests
+   │
+   ▼
+Deploy → staging server
+   │
+Manager testing
+   │
+   ▼
+Pull Request → main
+   │
+Manager approve
+   │
+   ▼
+Merge PR
+   │
+   ▼
+Deploy → production server
