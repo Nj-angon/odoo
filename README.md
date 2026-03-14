@@ -51,3 +51,7 @@ docker exec -it  -u root dicchr.df.daffodil.family /bin/bash
 FROM ir_asset
 WHERE name ILIKE '%olila%';
 
+#when different version of postgresql then dump like plain sql
+ - pg_dump -U user -d dbname -F p -f backup.sql
+Restore
+ - psql -U odoosaas -h 192.168.1.111 -d disd_test -f /opt/db_sql/plain_backup.sql
