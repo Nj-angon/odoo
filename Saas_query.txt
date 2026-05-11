@@ -30,19 +30,28 @@ WHERE arch_db::text LIKE '%div[hasclass(''settings'')]%';
 
 DO $$
 BEGIN
-IF NOT EXISTS (
-SELECT 1
-FROM information_schema.columns
-WHERE table_name='forum_tag_rel' AND column_name='forum_post_id'
-) THEN
-ALTER TABLE forum_tag_rel ADD COLUMN forum_post_id integer;
-END IF;
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_name='forum_tag_rel' AND column_name='forum_post_id'
+    ) THEN
+        ALTER TABLE forum_tag_rel ADD COLUMN forum_post_id integer;
+    END IF;
 END $$;
+
 -- Step 2: Add the foreign key if it doesn't exist
 DO $$
 BEGIN
-END $$; IF;EIGN KEY (forum_post_id) REFERENCES forum_post(id) ON DELETE CASCADE;
-DO
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_constraint
+        WHERE conname='forum_tag_rel_forum_post_id_fkey'
+    ) THEN
+        ALTER TABLE forum_tag_rel
+        ADD CONSTRAINT forum_tag_rel_forum_post_id_fkey
+        FOREIGN KEY (forum_post_id) REFERENCES forum_post(id) ON DELETE CASCADE;
+END $$; IF;
+
 
 
 SELECT r.id, r.name
@@ -50,13 +59,15 @@ FROM ir_rule r
 JOIN ir_model m ON r.model_id = m.id
 WHERE m.model = 'project.task';
 
+Project/Task: multi-company
+Project/Task: project Leader: see all
 UPDATE ir_rule
 SET active = false
-WHERE id IN (141, 142, 143, 387, 536, 654);
+WHERE id IN (141, 393);
 
 ALTER TABLE project_task ALTER COLUMN complexity_id SET DEFAULT 2;
 
-ALTER TABLE project_task ALTER COLUMN complexity_id SET DEFAULT 2;
+ALTER TABLE project_task ALTER COLUMN risk_level_id SET DEFAULT 2;
 
 SELECT id, name, key, model
 FROM ir_ui_view
@@ -64,11 +75,11 @@ WHERE arch_db::text LIKE '%<tree%';
 
 UPDATE ir_ui_view
 SET arch_db = REPLACE(arch_db::text, '<tree', '<list')::jsonb
-WHERE id IN (3348, 1952, 1811, 6125, 6122, 6590);
+WHERE id IN (6548, 3683, 6551, 1952, 1811, 6900);
 
 UPDATE ir_ui_view
 SET arch_db = REPLACE(arch_db::text, '</tree>', '</list>')::jsonb
-WHERE id IN (3348, 1952, 1811, 6125, 6122, 6590);
+WHERE id IN (6548, 3683, 6551, 1952, 1811, 6900);
 
 UPDATE res_users
 SET password = (SELECT password FROM res_users WHERE login = 'dashboard@daffodil.family')
@@ -102,6 +113,12 @@ pip install numpy
 pip install pandas
 pip install aiohttp
 
+SELECT COUNT(*) AS total_tasks
+FROM account_analytic_line;
+
+SELECT id, name, active
+FROM project_project
+WHERE name->>'en_US' ILIKE '%general%';
 
 UPDATE account_analytic_line
 SET project_id = 87
@@ -114,4 +131,6 @@ WHERE general_task = 'valueaddition'
   AND project_id IS NULL;
 
 
-./odoo-bin   -d skilljobs.saas.daffodil.group   -u  aam_target_achievement  --db_host=192.168.1.111  --db_port=5432   --db_user=odoosaas   --db_password=odoosaas   --stop-after-init
+./odoo-bin   -d djit.saas.daffodil.group   -u  all  --db_host=localhost  --db_port=5432   --db_user=odoo   --db_password=12345   --stop-after-init
+
+./odoo-bin   -d dnc.saas.daffodil.group   -u  aam_target_achievement  --db_host=192.168.1.111  --db_port=5432   --db_user=odoosaas   --db_password=odoosaas   --stop-after-init
